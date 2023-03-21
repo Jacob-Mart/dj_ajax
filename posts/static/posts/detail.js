@@ -1,5 +1,6 @@
 const postBox = document.getElementById('post-box')
 const alertBox = document.getElementById('alert-box')
+const authorBox = document.getElementById('author-box')
 const backBtn = document.getElementById('back-btn')
 const updateBtn = document.getElementById('update-btn')
 const deleteBtn = document.getElementById('delete-btn')
@@ -16,19 +17,13 @@ const deleteUrl = window.location.href + "delete/"
 
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
 
-// backBtn.addEventListener('click', ()=>{
-//     history.back()
-// })
-
 $.ajax({
     type: 'GET',
     url: url,
     success: function(response){
         const data = response.data
-
-        if(data.logged_in !== data.author){
-            
-        } else{
+        console.log(response)
+        if(data.logged_in == data.author){
             updateBtn.classList.remove('not-visible')
             deleteBtn.classList.remove('not-visible')
         }
@@ -49,6 +44,11 @@ $.ajax({
 
         titleInput.value = data.title
         bodyInput.value = data.body
+
+        authorBox.innerHTML = `
+            <img src="${data.avatar}" height="50px" width="auto" style="border-radius:50%;">
+            ${data.author}
+        `
 
         spinnerBox.classList.add('not-visible')
 
