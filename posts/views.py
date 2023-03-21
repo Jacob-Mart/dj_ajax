@@ -59,6 +59,17 @@ def load_post_data_view(request, num_posts):
             }
             data.append(item)
         return JsonResponse({'data':data[lower:upper], 'size': size})
+    
+def post_detail_data_view(request, pk):
+    obj = Post.objects.get(pk=pk)
+    data = {
+        'id': obj.id,
+        'title': obj.title,
+        'body': obj.body,
+        'author': obj.author.user.username,
+        'logged_in': request.user.username
+    }
+    return JsonResponse({'data': data})
 
 def like_unlike_post(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -71,6 +82,3 @@ def like_unlike_post(request):
             liked = True
             obj.liked.add(request.user)
         return JsonResponse({'liked': liked, 'count': obj.like_count})
-
-def hello_world_view(request):
-    return JsonResponse({'text': 'hello world'})
