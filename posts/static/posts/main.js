@@ -9,7 +9,6 @@ const body = document.getElementById('id_body')
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
 
 const url = window.location.href
-console.log(url)
 const alertBox = document.getElementById('alert-box')
 
 const getCookie = (name) => {
@@ -66,7 +65,6 @@ const getData = () => {
         type: 'GET',
         url: `/data/${visible}`,
         success: function(response){
-            console.log(response)
             const data = response.data
             setTimeout(()=>{
                 spinnerBox.classList.add('not-visible')
