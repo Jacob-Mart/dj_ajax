@@ -34,15 +34,18 @@ def post_list_and_create(request):
 
 @login_required
 def post_detail(request, pk):
-    obj = Post.objects.get(pk=pk)
-    form = PostForm()
+    try:
+        obj = Post.objects.get(pk=pk)
+        form = PostForm()
     
-    context = {
-        'obj': obj,
-        'form': form
-    }
+        context = {
+            'obj': obj,
+            'form': form
+        }
     
-    return render(request, 'posts/detail.html', context)
+        return render(request, 'posts/detail.html', context)
+    except:
+        return redirect('posts:main-board')
 
 @login_required
 def load_post_data_view(request, num_posts):
